@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { user } = (await getSession({ req })) as any
     const { book } = req.body
 
-    let prompt = `Generate a list of 10 popular songs that fits the theme of "${book}" based on their lyrics, style, and general vibe. Do not include any official sound track.\n`
+    const prompt = `Generate a list of 15 trending original songs from Spotify that fits the theme of "${book}" based on their lyrics, style, and mood. Do not include any official sound track.\n`
     console.log('@@@ prompt:', prompt)
 
     // generate a list of songs
@@ -34,21 +34,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // search songs from spotify
     const result = await Promise.all(
       playlist.map(async (song) => {
-        const response = await fetch(
-          `https://api.spotify.com/v1/search?type=track&limit=1&market=US&q=${encodeURIComponent(
-            song
-          )}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${user.accessToken}`,
-            },
-          }
-        )
-        const data = await response.json()
+        if (song) {
+          const response = await fetch(
+            `https://api.spotify.com/v1/search?type=track&limit=1&market=US&q=${encodeURIComponent(
+              song
+            )}`,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${user.accessToken}`,
+              },
+            }
+          )
+          const data = await response.json()
 
-        return data.tracks.items[0]
+          return data.tracks.items[0]
+        }
       })
     )
     console.log('@@@ result', result)
