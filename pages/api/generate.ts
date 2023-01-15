@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { user } = (await getSession({ req })) as any
     const { book } = req.body
 
-    const prompt = `Generate a list of 15 trending original songs from Spotify that fits the theme of "${book}" based on their lyrics, style, and mood. Do not include any official sound track.\n`
+    const prompt = `Generate a list of 15 trending original songs from Spotify that fits the theme of the book "${book}" based on their lyrics, style, and mood. Do not include any official sound track.\n`
     console.log('@@@ prompt:', prompt)
 
     // generate a list of songs
