@@ -94,11 +94,11 @@ export default function Home() {
         <div className="flex flex-col gap-8 px-6">
           <section className="relative min-h-[600px]">
             <img
-              className="absolute bottom-0 left-[24px] h-80 select-none"
+              className="absolute bottom-0 left-[24px] h-80 select-none opacity-50 lg:opacity-100"
               src="/img/character.png"
             />
 
-            <div className="flex flex-col items-center justify-center gap-12">
+            <div className="relative z-10 flex flex-col items-center justify-center gap-12 bg-black/50 lg:bg-transparent">
               <div className="flex flex-col items-center justify-center gap-6 text-center">
                 <h1 className="text-4xl font-bold md:text-5xl">
                   Tune in to the vibe of your favorite books
