@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import { Analytics } from '@vercel/analytics/react'
 import { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { Toaster } from 'react-hot-toast'
@@ -11,6 +12,7 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <Component {...pageProps} />
+      <Analytics />
       <Toaster />
     </SessionProvider>
   )

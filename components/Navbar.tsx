@@ -6,7 +6,7 @@ const Navbar = () => {
   const { status } = useSession()
 
   const handleLogin = () => {
-    signIn('spotify', { callbackUrl: 'http://localhost:3000' })
+    signIn('spotify', { callbackUrl: 'https://readingmood.xyz' })
   }
 
   return (

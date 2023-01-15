@@ -80,9 +80,12 @@ export default function Home() {
     <>
       <Head>
         <title>readingmood</title>
-        <meta name="description" content="Playlist that fits the vibe of the book." />
+        <meta
+          name="description"
+          content="Create a spotify playlist that matches the vibe of your favorite book."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/img/logo.png" />
       </Head>
 
       <Navbar />
