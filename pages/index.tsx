@@ -119,9 +119,11 @@ export default function Home() {
                 </h2>
               </div>
               <div className="flex w-full flex-col items-center justify-center gap-4">
-                {session?.user?.name && (
+                {/* @ts-ignore */}
+                {session?.user.user.name && (
                   <div className="flex w-full max-w-lg items-start justify-start text-xl">
-                    Yo, {session?.user?.name}!
+                    {/* @ts-ignore */}
+                    Yo, {session?.user.user.name}!
                   </div>
                 )}
                 <input
