@@ -13,17 +13,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { user } = (await getSession({ req })) as any
     const { book } = req.body
 
-    const prompt = `Generate a list of 20 trending original songs from Spotify that fits the theme of the book "${book}" based on their lyrics, style, and mood. Do not include any official sound track.\n`
+    const prompt = `Summarize the book "${book}".\n`
     console.log('@@@ prompt:', prompt)
 
-    // generate a list of songs
+    // base prompt
     const baseCompletion = await openai.createCompletion({
       model: 'text-davinci-003',
       prompt: prompt,
       temperature: 0.8,
       max_tokens: 256,
     })
-    const songs = baseCompletion.data.choices.pop().text
+    const summarization = `Summary: ${baseCompletion.data.choices.pop().text}`
+    console.log('@@@ summarization:', summarization)
+
+    const chainedPrompt = `${prompt}
+    
+${summarization}
+
+Now generate a list of 20 trending songs that fits the book's summary based on their lyrics, style, and general vibe. Do not include any official soundtrack. Only return the song title and artist.\n`
+    console.log('@@@ chainedPrompt:', chainedPrompt)
+
+    // generate a list of songs
+    const chainedCompletion = await openai.createCompletion({
+      model: 'text-davinci-003',
+      prompt: chainedPrompt,
+      temperature: 0.8,
+      max_tokens: 256,
+    })
+    const songs = chainedCompletion.data.choices.pop().text
     console.log('@@@ songs:', songs)
 
     // format songs to proper array
@@ -57,12 +74,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             data?.tracks.items[0].name.toLowerCase().includes('piano') ||
             data?.tracks.items[0].name.toLowerCase().includes('remix') ||
             data?.tracks.items[0].name.toLowerCase().includes('originally') ||
+            data?.tracks.items[0].name.toLowerCase().includes('perform') ||
+            data?.tracks.items[0].name.toLowerCase().includes('cappella') ||
             data?.tracks.items[0].name.toLowerCase().includes('8-bit') ||
+            data?.tracks.items[0].name.toLowerCase().includes('radio') ||
+            data?.tracks.items[0].name.toLowerCase().includes('cover') ||
             data?.tracks.items[0].name.toLowerCase().includes('made popular') ||
             data?.tracks.items[0].name.toLowerCase().includes('made famous') ||
             data?.tracks.items[0].name.toLowerCase().includes('party mix') ||
             data?.tracks.items[0].name.toLowerCase().includes('replayed by') ||
+            data?.tracks.items[0].name.toLowerCase().includes('the climb') ||
             data?.tracks.items[0].name.toLowerCase().includes('song review')
+            // @TODO: remove artist with
           ) {
             return null
           } else {

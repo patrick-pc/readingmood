@@ -120,7 +120,7 @@ export default function Home() {
                   onChange={(e) => setBook(e.target.value)}
                 />
                 <button
-                  className="flex w-52 items-center justify-center rounded-full bg-orange-400 px-5 py-3 text-center transition hover:bg-orange-500 disabled:bg-zinc-700 disabled:opacity-50"
+                  className="flex w-52 items-center justify-center  gap-2 rounded-full bg-orange-400 px-5 py-3 text-center transition hover:bg-orange-500 disabled:bg-zinc-700 disabled:opacity-50"
                   onClick={generatePlaylist}
                   disabled={!book || isLoading}
                 >
@@ -137,39 +137,50 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="flex justify-end gap-4">
+          <section className="px-6">
             {playlist?.length > 0 && (
-              <>
-                <button
-                  className="flex w-52 items-center justify-center rounded-full bg-orange-400 px-5 py-3 text-center transition hover:bg-orange-500 disabled:bg-zinc-700 disabled:opacity-50"
-                  onClick={createPlaylist}
-                  disabled={isLoading}
-                >
-                  {isLoading ? <Waveform size={20} speed={1} color="white" /> : 'Create Playlist'}
-                </button>
-                <button
-                  className="disabled:cursor-not-allowed disabled:text-zinc-700"
-                  onClick={generatePlaylist}
-                  disabled={isLoading}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="h-6 w-6"
+              <div className="flex items-center justify-end gap-8 md:justify-between">
+                <h3 className="hidden text-4xl font-bold md:block">{book} vibez</h3>
+
+                <div className="flex items-center justify-center gap-4">
+                  <button
+                    className="flex w-52 items-center justify-center gap-2 rounded-full bg-orange-400 px-5 py-3 text-center transition hover:bg-orange-500 disabled:bg-zinc-700 disabled:opacity-50"
+                    onClick={createPlaylist}
+                    disabled={isLoading}
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </>
+                    {isLoading ? (
+                      <Waveform size={20} speed={1} color="white" />
+                    ) : (
+                      <>
+                        <img className="h-6 w-6" src="/img/spotify.png" />
+                        <p>Create Playlist</p>
+                      </>
+                    )}
+                  </button>
+                  <button
+                    className="disabled:cursor-not-allowed disabled:text-zinc-700"
+                    onClick={generatePlaylist}
+                    disabled={isLoading}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="h-6 w-6"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             )}
           </section>
 
-          <section className="relative flex flex-col gap-8 md:flex-row">
+          <section className="relative flex flex-col gap-8 px-6 md:flex-row">
             <div className="pointer-events-none absolute bottom-0 left-[calc(50%_-_500px)] h-[300px] w-[1000px] bg-yellow-600 opacity-20 blur-[150px]"></div>
             {playlist?.length > 0 && (
               <div className="flex w-full flex-col items-center justify-center gap-8 rounded-xl bg-zinc-900/50 p-6 md:w-[600px]">
