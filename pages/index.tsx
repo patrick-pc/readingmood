@@ -98,7 +98,7 @@ export default function Home() {
               src="/img/character.png"
             />
 
-            <div className="relative z-10 flex flex-col items-center justify-center gap-12 bg-black/50 lg:bg-transparent">
+            <div className="relative z-10 flex flex-col items-center justify-center gap-12 rounded-xl bg-black/50 pb-8 lg:bg-transparent">
               <div className="flex flex-col items-center justify-center gap-6 text-center">
                 <h1 className="text-4xl font-bold md:text-5xl">
                   Tune in to the vibe of your favorite books
