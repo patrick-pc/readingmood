@@ -182,7 +182,7 @@ export default function Home() {
               </div>
             )}
 
-            <div className="flex max-h-[500px] w-full flex-col gap-2 overflow-y-auto overflow-x-hidden">
+            <div className="scrollbar flex max-h-[500px] w-full flex-col gap-2 overflow-y-auto overflow-x-hidden">
               {playlist?.map((song, i) => {
                 return (
                   song &&
