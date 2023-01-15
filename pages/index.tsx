@@ -126,6 +126,13 @@ export default function Home() {
                 >
                   {isLoading ? <Waveform size={20} speed={1} color="white" /> : 'Generate Playlist'}
                 </button>
+
+                <div className="text-center text-sm text-orange-200/50">
+                  note: readingmood spotify app is still in dev mode, if interested in using it dm{' '}
+                  <a className="font-medium" href="https://twitter.com/_patrickpc" target="_blank">
+                    @_patrickpc
+                  </a>
+                </div>
               </div>
             </div>
           </section>
