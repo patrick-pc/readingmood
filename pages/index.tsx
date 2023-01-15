@@ -91,14 +91,14 @@ export default function Home() {
       <Navbar />
 
       <main className="container mx-auto pt-12 pb-24">
-        <div className="flex flex-col gap-8 px-6">
+        <div className="flex flex-col gap-8">
           <section className="relative min-h-[600px]">
             <img
               className="absolute bottom-0 left-[24px] h-80 select-none opacity-50 lg:opacity-100"
               src="/img/character.png"
             />
 
-            <div className="relative z-10 flex flex-col items-center justify-center gap-12 rounded-xl bg-black/50 pb-8 lg:bg-transparent">
+            <div className="relative z-10 flex flex-col items-center justify-center gap-12 rounded-xl bg-black/50 p-6 lg:bg-transparent">
               <div className="flex flex-col items-center justify-center gap-6 text-center">
                 <h1 className="text-4xl font-bold md:text-5xl">
                   Tune in to the vibe of your favorite books
