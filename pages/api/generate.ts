@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { user } = (await getSession({ req })) as any
     const { book } = req.body
 
-    const prompt = `Generate a list of 15 trending original songs from Spotify that fits the theme of the book "${book}" based on their lyrics, style, and mood. Do not include any official sound track.\n`
+    const prompt = `Generate a list of 20 trending original songs from Spotify that fits the theme of the book "${book}" based on their lyrics, style, and mood. Do not include any official sound track.\n`
     console.log('@@@ prompt:', prompt)
 
     // generate a list of songs
@@ -48,14 +48,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
           )
           const data = await response.json()
-
-          return data.tracks.items[0]
+          if (
+            data?.tracks.items[0].name.toLowerCase().includes('version') ||
+            data?.tracks.items[0].name.toLowerCase().includes('karaoke') ||
+            data?.tracks.items[0].name.toLowerCase().includes('parody') ||
+            data?.tracks.items[0].name.toLowerCase().includes('commentary') ||
+            data?.tracks.items[0].name.toLowerCase().includes('instrumental') ||
+            data?.tracks.items[0].name.toLowerCase().includes('piano') ||
+            data?.tracks.items[0].name.toLowerCase().includes('remix') ||
+            data?.tracks.items[0].name.toLowerCase().includes('originally') ||
+            data?.tracks.items[0].name.toLowerCase().includes('8-bit') ||
+            data?.tracks.items[0].name.toLowerCase().includes('made popular') ||
+            data?.tracks.items[0].name.toLowerCase().includes('made famous') ||
+            data?.tracks.items[0].name.toLowerCase().includes('party mix') ||
+            data?.tracks.items[0].name.toLowerCase().includes('replayed by') ||
+            data?.tracks.items[0].name.toLowerCase().includes('song review')
+          ) {
+            return null
+          } else {
+            return data.tracks.items[0]
+          }
         }
       })
     )
-    console.log('@@@ result', result)
 
-    res.status(200).json(result)
+    const filteredResult = result.filter((track) => {
+      return track != null
+    })
+    console.log('@@@ filteredResult', filteredResult)
+
+    res.status(200).json(filteredResult)
   } catch (error) {
     throw error
   }
