@@ -11,6 +11,7 @@ export default function Home() {
   const [book, setBook] = useState('')
   const [playlist, setPlaylist] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
+  const [playlistUrl, setPlaylistUrl] = useState('')
   const playlistRef = useRef(null)
 
   const generatePlaylist = async () => {
@@ -22,6 +23,7 @@ export default function Home() {
     }
 
     setIsLoading(true)
+    setPlaylistUrl('')
     try {
       const response = await fetch('/api/generate', {
         method: 'POST',
@@ -33,8 +35,11 @@ export default function Home() {
         }),
       })
 
+      if (response.status !== 200) throw Error
+
       const data = await response.json()
       console.log('@@@ data', data)
+
       setPlaylist(data)
 
       // smooth scroll to section
@@ -43,7 +48,7 @@ export default function Home() {
       }, 500)
     } catch (error) {
       console.log(error)
-      toast.error(error.message)
+      toast.error('Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -67,10 +72,16 @@ export default function Home() {
 
       const data = await response.json()
       console.log('@@@ data', data)
-      if (data?.snapshot_id) toast.success('Playlist created!')
+
+      if (data?.result.snapshot_id) {
+        setPlaylistUrl(data.playlistUrl)
+        toast.success('Playlist created!')
+      } else if (data?.result.error) {
+        toast.error(`Error: ${data.result.error.message}`)
+      }
     } catch (error) {
       console.log(error)
-      toast.error(error.message)
+      toast.error(`Error: ${error?.message}`)
     } finally {
       setIsLoading(false)
     }
@@ -178,6 +189,32 @@ export default function Home() {
                 </div>
               </div>
             )}
+
+            <div className="flex w-full justify-end">
+              {playlistUrl && (
+                <a
+                  className="mt-8 flex items-center gap-2 text-sm text-orange-200"
+                  href={playlistUrl}
+                  target="_blank"
+                >
+                  <p>View Playlist</p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-4 w-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                    />
+                  </svg>
+                </a>
+              )}
+            </div>
           </section>
 
           <section className="relative flex flex-col gap-8 px-6 md:flex-row">

@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     uris = uris.slice(0, -1)
 
     // create playlist
-    let response = await fetch(`	https://api.spotify.com/v1/users/${user.sub}/playlists`, {
+    let response = await fetch(`https://api.spotify.com/v1/users/${user.user.id}/playlists`, {
       method: 'POST',
       body: JSON.stringify({
         name: `${book} vibez`,
@@ -27,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     })
     const playlist = await response.json()
+    console.log('@@@ playlist', playlist)
 
     // add songs to the created playlist
     response = await fetch(
@@ -43,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const result = await response.json()
     console.log('@@@ result', result)
 
-    res.status(200).json(result)
+    res.status(200).json({ result, playlistUrl: playlist.external_urls.spotify })
   } catch (error) {
     throw error
   }
