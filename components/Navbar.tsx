@@ -12,7 +12,13 @@ const Navbar = () => {
   return (
     <div className="flex w-full items-center justify-between p-6">
       <Link href="/">
-        <img className="h-10 cursor-pointer" src="/img/logo.png" />
+        <button className="flex items-center justify-center gap-2">
+          <img className="h-8 cursor-pointer" src="/img/logo.png" />
+          <div className="text-xl font-medium">
+            <span className="text-[#D18161]">reading</span>
+            <span className="text-[#FCE4AD]">mood</span>
+          </div>
+        </button>
       </Link>
 
       {status === 'authenticated' ? (
